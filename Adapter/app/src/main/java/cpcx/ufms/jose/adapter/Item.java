@@ -8,11 +8,23 @@ import java.io.Serializable;
 public class Item implements Serializable {
     private String nome;
     private String valor;
+    private int imagem;
 
-    public Item(String nome, String valor) {
+    public Item(String nome, String valor,int imagem) {
         this.nome = nome;
         this.valor = valor;
+        this.imagem = imagem;
     }
+
+    public int getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(int imagem) {
+        this.imagem = imagem;
+    }
+
+
 
     public String getNome() {
         return nome;

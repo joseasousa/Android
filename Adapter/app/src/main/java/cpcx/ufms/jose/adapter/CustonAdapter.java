@@ -5,18 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jose on 21/01/2016.
  */
 public class CustonAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
-    private ArrayList<Item>itens;
+    private List<Item> itens;
 
-    public CustonAdapter(ArrayList<Item> itens,Context context) {
+    public CustonAdapter(List<Item> itens,Context context) {
         this.itens = itens;
         layoutInflater = LayoutInflater.from(context);
     }
@@ -43,11 +44,9 @@ public class CustonAdapter extends BaseAdapter {
         //infla o layout para podermos preencher os dados
         convertView = layoutInflater.inflate(R.layout.item_layout,null);
 
+        ((ImageView)convertView.findViewById(R.id.imageView)).setImageResource(item.getImagem());
 
-
-        //((TextView) view.findViewById(R.id.data)).setText(miniCurso.getData());
-
-        ((TextView)convertView.findViewById(R.id.tvNome)).setText(item.getNome());
+                ((TextView) convertView.findViewById(R.id.tvNome)).setText(item.getNome());
         ((TextView)convertView.findViewById(R.id.tvValor)).setText(item.getValor());
 
         return convertView;
