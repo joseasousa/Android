@@ -1,4 +1,4 @@
-package cpcx.ufms.jose.adapter;
+package cpcx.ufms.jose.adapter.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,14 +10,17 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import cpcx.ufms.jose.adapter.R;
+import cpcx.ufms.jose.adapter.model.Lanche;
+
 /**
  * Created by jose on 21/01/2016.
  */
 public class CustonAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
-    private List<Item> itens;
+    private List<Lanche> itens;
 
-    public CustonAdapter(List<Item> itens,Context context) {
+    public CustonAdapter(List<Lanche> itens,Context context) {
         this.itens = itens;
         layoutInflater = LayoutInflater.from(context);
     }
@@ -40,7 +43,7 @@ public class CustonAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //Pega o item de acordo com a posicao.
-        Item item = itens.get(position);
+        Lanche item = itens.get(position);
         //infla o layout para podermos preencher os dados
         convertView = layoutInflater.inflate(R.layout.item_layout,null);
 

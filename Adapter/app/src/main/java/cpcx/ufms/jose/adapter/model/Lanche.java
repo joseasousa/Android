@@ -1,19 +1,23 @@
-package cpcx.ufms.jose.adapter;
+package cpcx.ufms.jose.adapter.model;
 
 import java.io.Serializable;
 
 /**
  * Created by jose on 21/01/2016.
  */
-public class Item implements Serializable {
+public class Lanche implements Serializable {
+
     private String nome;
     private String valor;
     private int imagem;
 
-    public Item(String nome, String valor,int imagem) {
+    public Lanche(String nome, String valor, int imagem) {
         this.nome = nome;
         this.valor = valor;
         this.imagem = imagem;
+    }
+    public  Lanche(){
+
     }
 
     public int getImagem() {
