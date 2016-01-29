@@ -19,14 +19,14 @@ public class Banco extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String sql = "CREATE TABLE lanche(_id integer primarry key,nome TEXT, valor TEXT)";
         db.execSQL(sql);
-        sql = "INSERT INTO lanche VALUES(1,'X-Salada','6,5')";
+        /*sql = "INSERT INTO lanche VALUES(1,'X-Salada','6,5')";
         db.execSQL(sql);
         sql = "INSERT INTO lanche VALUES(1,'X-File','9,2')";
         db.execSQL(sql);
         sql = "INSERT INTO lanche VALUES(1,'X-Tudo','10,2')";
         db.execSQL(sql);
         sql = "INSERT INTO lanche VALUES(1,'X-Teiga','2,2')";
-        db.execSQL(sql);
+        db.execSQL(sql);*/
     }
 
     @Override

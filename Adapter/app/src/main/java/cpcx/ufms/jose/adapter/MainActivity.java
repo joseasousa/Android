@@ -4,7 +4,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -16,7 +18,9 @@ import cpcx.ufms.jose.adapter.helper.Banco;
 import cpcx.ufms.jose.adapter.model.Lanche;
 
 public class MainActivity extends AppCompatActivity {
+
     Banco b = new Banco(getBaseContext(), "lanche", null, 1);
+
     private ListView listView;
     private List<Lanche> lanches;
 
@@ -30,11 +34,23 @@ public class MainActivity extends AppCompatActivity {
         consultaBanco();
         CustonAdapter custonAdapter = new CustonAdapter(lanches, getApplicationContext());
         listView.setAdapter(custonAdapter);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Lanche lanche = new Lanche();
+                lanche.setNome("lanche"+lanches.size());
+                lanche.setValor("300,00");
+               Insere(lanche);
+            }
+        });
     }
 
 
 
     private void consultaBanco() {
+        b = new Banco(getBaseContext(), "lanche", null, 1);
         String sql = "SELECT  nome,valor FROM lanche";
         lanches = new ArrayList<Lanche>();
         Cursor cursor = b.buscar(sql);
@@ -63,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (resultado != -1) {
             Toast.makeText(this, "Deu Certo", Toast.LENGTH_SHORT).show();
+            consultaBanco();
+            CustonAdapter custonAdapter = new CustonAdapter(lanches, getApplicationContext());
+            listView.setAdapter(custonAdapter);
         } else {
             Toast.makeText(this, "Erro", Toast.LENGTH_SHORT).show();
         }
