@@ -1,25 +1,22 @@
 package cpcx.ufms.jose.adapter;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cpcx.ufms.jose.adapter.adapter.CustonAdapter;
-import cpcx.ufms.jose.adapter.helper.Banco;
+import cpcx.ufms.jose.adapter.helper.BancoHelper;
 import cpcx.ufms.jose.adapter.model.Lanche;
 
 public class MainActivity extends AppCompatActivity {
 
-    Banco b = new Banco(getBaseContext(), "lanche", null, 1);
+
+    private BancoHelper bh;
 
     private ListView listView;
     private List<Lanche> lanches;
@@ -28,10 +25,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         listView = (ListView) findViewById(R.id.lista);
 
-        consultaBanco();
+
+         bh = new BancoHelper(getBaseContext());
+
+
+        lanches = bh.getAllLanches();
+
+
         CustonAdapter custonAdapter = new CustonAdapter(lanches, getApplicationContext());
         listView.setAdapter(custonAdapter);
 
@@ -40,52 +42,44 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Lanche lanche = new Lanche();
-                lanche.setNome("lanche"+lanches.size());
+                lanche.setNome("lanche" + lanches.size());
                 lanche.setValor("300,00");
-               Insere(lanche);
+                lanche.setImagem(R.drawable.x_tudo);
+                bh.addLanche(lanche);
+
+                lanches.add(lanche);
+
+
+                CustonAdapter custonAdapter = new CustonAdapter(lanches, getApplicationContext());
+                listView.setAdapter(custonAdapter);
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Funcao de delete
+                //bh.deleteLanche(lanches.get(position));
+                lanches.get(position).setImagem(R.drawable.cachorro_quente);
+                //usando funcao de update
+                bh.updateLanche(lanches.get(position));
+
+                atualizaLista();
             }
         });
     }
 
+    private void atualizaLista(){
+        lanches= bh.getAllLanches();
 
-
-    private void consultaBanco() {
-        b = new Banco(getBaseContext(), "lanche", null, 1);
-        String sql = "SELECT  nome,valor FROM lanche";
-        lanches = new ArrayList<Lanche>();
-        Cursor cursor = b.buscar(sql);
-
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            for (int i = 0; i < cursor.getCount(); i++) {
-                Lanche l = new Lanche();
-                l.setNome(cursor.getString(0));
-                l.setValor(cursor.getString(1));
-                lanches.add(l);
-                cursor.moveToNext();
-            }
-        }
+        CustonAdapter custonAdapter = new CustonAdapter(lanches, getApplicationContext());
+        listView.setAdapter(custonAdapter);
     }
 
-    private void Insere(Lanche lanche) {
 
-        SQLiteDatabase base = b.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put("nome", lanche.getNome());
-        values.put("valor", lanche.getValor());
 
-        long resultado = base.insert("lanche", null, values);
 
-        if (resultado != -1) {
-            Toast.makeText(this, "Deu Certo", Toast.LENGTH_SHORT).show();
-            consultaBanco();
-            CustonAdapter custonAdapter = new CustonAdapter(lanches, getApplicationContext());
-            listView.setAdapter(custonAdapter);
-        } else {
-            Toast.makeText(this, "Erro", Toast.LENGTH_SHORT).show();
-        }
-    }
 
 
 }

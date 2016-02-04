@@ -1,15 +1,21 @@
 package cpcx.ufms.jose.adapter.helper;
 
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import cpcx.ufms.jose.adapter.model.Lanche;
+
 /**
  * Created by jose .
  */
 public class Banco extends SQLiteOpenHelper {
+
+    private SQLiteDatabase db;
+
 
     public Banco(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -17,16 +23,8 @@ public class Banco extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE lanche(_id integer primarry key,nome TEXT, valor TEXT)";
+        String sql = "CREATE TABLE lanche(_id INTEGER PRIMARY KEY  AUTOINCREMENT,nome TEXT, valor TEXT, imagem integer)";
         db.execSQL(sql);
-        /*sql = "INSERT INTO lanche VALUES(1,'X-Salada','6,5')";
-        db.execSQL(sql);
-        sql = "INSERT INTO lanche VALUES(1,'X-File','9,2')";
-        db.execSQL(sql);
-        sql = "INSERT INTO lanche VALUES(1,'X-Tudo','10,2')";
-        db.execSQL(sql);
-        sql = "INSERT INTO lanche VALUES(1,'X-Teiga','2,2')";
-        db.execSQL(sql);*/
     }
 
     @Override
@@ -40,6 +38,19 @@ public class Banco extends SQLiteOpenHelper {
         return getWritableDatabase().rawQuery(sql, null);
     }
 
+    public int updateLanche(Lanche lanche) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put("nome", lanche.getNome());
+        values.put("valor", lanche.getValor());
+        // updating row
+        return db.update("lanches", values, "_id = ?", new String[]{String.valueOf(lanche.getId())});
+    }
 
+    public void deleteLanche(Lanche lanche) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("lanche", "_id = ?", new String[]{String.valueOf(lanche.getId())});
+        db.close();
+    }
 }

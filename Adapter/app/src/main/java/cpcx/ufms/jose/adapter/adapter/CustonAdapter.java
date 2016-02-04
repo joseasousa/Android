@@ -49,7 +49,7 @@ public class CustonAdapter extends BaseAdapter {
 
         ((ImageView)convertView.findViewById(R.id.imageView)).setImageResource(item.getImagem());
 
-                ((TextView) convertView.findViewById(R.id.tvNome)).setText(item.getNome());
+        ((TextView) convertView.findViewById(R.id.tvNome)).setText(item.getNome());
         ((TextView)convertView.findViewById(R.id.tvValor)).setText(item.getValor());
 
         return convertView;
