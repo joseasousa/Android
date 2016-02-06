@@ -80,10 +80,8 @@ public class BancoHelper extends SQLiteOpenHelper {
         lanche.setId(cursor.getInt(0));
         lanche.setNome(cursor.getString(1));
         lanche.setValor(cursor.getString(2));
-        lanche.setValor(cursor.getString(3));
-        lanche.setImagem(cursor.getInt(4));
+        lanche.setImagem(cursor.getInt(3));
 
-        // return lanche
         return lanche;
 
         }
