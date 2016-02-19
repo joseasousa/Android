@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import cpcx.ufms.jose.adapter.R;
 import cpcx.ufms.jose.adapter.model.Lanche;
 
@@ -42,16 +44,30 @@ public class CustonAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        //Pega o item de acordo com a posicao.
-        Lanche item = itens.get(position);
-        //infla o layout para podermos preencher os dados
-        convertView = layoutInflater.inflate(R.layout.item_layout,null);
+        ViewHolder holder;
+        Lanche l = itens.get(position);
 
-        ((ImageView)convertView.findViewById(R.id.imageView)).setImageResource(item.getImagem());
-
-        ((TextView) convertView.findViewById(R.id.tvNome)).setText(item.getNome());
-        ((TextView)convertView.findViewById(R.id.tvValor)).setText(item.getValor());
+        if (convertView != null) {
+            holder = (ViewHolder) convertView.getTag();
+        } else {
+            convertView =  layoutInflater.inflate(R.layout.item_layout, parent, false);
+            holder = new ViewHolder(convertView);
+            convertView.setTag(holder);
+        }
+        holder.nome.setText(l.getNome());
+        holder.imagem.setImageResource(l.getImagem());
+        holder.valor.setText(l.getValor());
 
         return convertView;
+    }
+
+    static class ViewHolder {
+        @Bind(R.id.tvNome) TextView nome;
+        @Bind(R.id.tvValor) TextView valor;
+        @Bind(R.id.imageView) ImageView imagem;
+
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 }
