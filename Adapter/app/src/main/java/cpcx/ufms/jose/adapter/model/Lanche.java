@@ -1,16 +1,29 @@
 package cpcx.ufms.jose.adapter.model;
 
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 import java.io.Serializable;
+
+import cpcx.ufms.jose.adapter.helper.BancoHelper;
 
 /**
  * Created by jose on 21/01/2016.
  */
-public class Lanche implements Serializable {
+@Table(database = BancoHelper.class)
+public class Lanche extends BaseModel implements Serializable {
 
+    @PrimaryKey(autoincrement = true)
+    private long id;
+    @Column
     private String nome;
+    @Column
     private String valor;
+    @Column
     private int imagem;
-    private int _id;
+
 
 
     public Lanche() {
@@ -22,19 +35,19 @@ public class Lanche implements Serializable {
         this.imagem = imagem;
     }
 
-    public Lanche(int _id, String nome, String valor, int imagem) {
+    public Lanche(long id, String nome, String valor, int imagem) {
         this.nome = nome;
         this.valor = valor;
         this.imagem = imagem;
-        this._id = _id;
+        this.id = id;
     }
 
-    public int getId() {
-        return _id;
+    public long getId() {
+        return id;
     }
 
-    public void setId(int _id) {
-        this._id = _id;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public int getImagem() {
