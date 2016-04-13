@@ -44,7 +44,22 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:elevation="30dp"
-        ></ImageView>
+        android:background="@color/colorPrimaryLight"
+
+        />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabFhoto"
+        android:layout_width="@dimen/camSize"
+        android:layout_height="@dimen/camSize"
+        android:layout_gravity="bottom|end"
+        android:src="@android:drawable/ic_menu_camera"
+        android:layout_alignBottom="@+id/imagem"
+        android:layout_alignRight="@+id/edtValor"
+        android:layout_alignEnd="@+id/edtValor"
+        app:backgroundTint="@color/colorCan"
+        />
 
 
 

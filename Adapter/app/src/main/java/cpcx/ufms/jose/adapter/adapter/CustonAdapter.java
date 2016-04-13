@@ -1,6 +1,8 @@
 package cpcx.ufms.jose.adapter.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,8 +57,15 @@ public class CustonAdapter extends BaseAdapter {
             convertView.setTag(holder);
         }
         holder.nome.setText(l.getNome());
-        holder.imagem.setImageResource(l.getImagem());
+
         holder.valor.setText(l.getValor());
+
+        String url = l.getImagem();
+        if (url != null) {
+            Bitmap imagemFoto = BitmapFactory.decodeFile(url);
+            holder.imagem.setImageBitmap(imagemFoto);
+            holder.imagem.setTag(url);
+        }
 
         return convertView;
     }
@@ -70,4 +79,6 @@ public class CustonAdapter extends BaseAdapter {
             ButterKnife.bind(this, view);
         }
     }
+
+
 }

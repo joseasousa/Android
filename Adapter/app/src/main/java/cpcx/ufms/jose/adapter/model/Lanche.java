@@ -22,20 +22,20 @@ public class Lanche extends BaseModel implements Serializable {
     @Column
     private String valor;
     @Column
-    private int imagem;
+    private String imagem;
 
 
 
     public Lanche() {
     }
 
-    public Lanche(String nome, String valor, int imagem) {
+    public Lanche(String nome, String valor, String imagem) {
         this.nome = nome;
         this.valor = valor;
         this.imagem = imagem;
     }
 
-    public Lanche(long id, String nome, String valor, int imagem) {
+    public Lanche(long id, String nome, String valor, String imagem) {
         this.nome = nome;
         this.valor = valor;
         this.imagem = imagem;
@@ -50,11 +50,11 @@ public class Lanche extends BaseModel implements Serializable {
         this.id = id;
     }
 
-    public int getImagem() {
+    public String getImagem() {
         return imagem;
     }
 
-    public void setImagem(int imagem) {
+    public void setImagem(String imagem) {
         this.imagem = imagem;
     }
 
