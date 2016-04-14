@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.firebase.client.Firebase;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.io.File;
@@ -32,7 +31,7 @@ public class Update extends AppCompatActivity {
 
     @Bind(R.id.imagem)
     ImageView imvImagem;
-    Firebase firebase;
+
 
     @Bind(R.id.edtValor)
     EditText edtValor;
@@ -59,12 +58,12 @@ public class Update extends AppCompatActivity {
 
         setContentView(R.layout.activity_update);
 
-        Firebase.setAndroidContext(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
-        firebase = new Firebase("https://baseaula.firebaseio.com/");
+
 
 
 
@@ -111,7 +110,7 @@ public class Update extends AppCompatActivity {
             List<Lanche> lanches = SQLite.select().from(Lanche.class).queryList();
 
         }
-        firebase.child("lanche").push().setValue(lanche);
+
         finish();
     }
 
