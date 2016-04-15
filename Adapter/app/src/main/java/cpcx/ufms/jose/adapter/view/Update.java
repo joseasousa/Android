@@ -10,7 +10,6 @@ import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -107,7 +106,7 @@ public class Update extends AppCompatActivity {
             Map<String,Object>mp = new HashMap<String,Object>();
             mp.put(lanche.getId(), lanche);
 
-            firebase.child("lanche").child(lanche.getId()).updateChildren(mp);
+            firebase.child("lanche").updateChildren(mp);
 
         } else {
             lanche.setNome(edtNome.getText().toString());
@@ -120,7 +119,6 @@ public class Update extends AppCompatActivity {
             lanche.setId(newPost.getKey());
 
             newPost.setValue(lanche);
-            Log.i("Teste", (String) imvImagem.getTag());
         }
         finish();
     }

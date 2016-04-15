@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.lista)
     ListView listView;
 
-    public static List<Lanche> lanches = new ArrayList<Lanche>();
+    private List<Lanche> lanches = new ArrayList<Lanche>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
