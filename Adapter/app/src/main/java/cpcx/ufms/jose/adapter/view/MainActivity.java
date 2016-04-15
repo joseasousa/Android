@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent i = new Intent(getBaseContext(), Update.class);
 
-                i.putExtra("lanche", position);
+                i.putExtra("lanche", lanches.get(position));
 
                 startActivity(i);
             }
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         mFirebase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot data : dataSnapshot.getChildren() ){
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
                     lanches.add(data.getValue(Lanche.class));
                 }
             }

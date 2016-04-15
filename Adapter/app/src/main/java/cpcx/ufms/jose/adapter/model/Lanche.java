@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class Lanche  implements Serializable {
 
   //  @PrimaryKey(autoincrement = true)
-    private long id;
+    private String id;
     //@Column
     private String nome;
     //@Column
@@ -28,18 +28,18 @@ public class Lanche  implements Serializable {
         this.imagem = imagem;
     }
 
-    public Lanche(long id, String nome, String valor, String imagem) {
+    public Lanche(String id, String nome, String valor, String imagem) {
         this.nome = nome;
         this.valor = valor;
         this.imagem = imagem;
         this.id = id;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -66,4 +66,8 @@ public class Lanche  implements Serializable {
     public void setValor(String valor) {
         this.valor = valor;
     }
+
+
+
+    
 }
