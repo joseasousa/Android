@@ -15,11 +15,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.firebase.client.Firebase;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,6 +27,7 @@ import cpcx.ufms.jose.adapter.R;
 import cpcx.ufms.jose.adapter.model.Lanche;
 
 public class Update extends AppCompatActivity {
+    private Firebase firebase;
 
     @Bind(R.id.imagem)
     ImageView imvImagem;
@@ -42,7 +42,10 @@ public class Update extends AppCompatActivity {
     FloatingActionButton fbDell;
 
     private boolean update = false;
+
     private Lanche lanche;
+
+    private int id;
 
     private String localFoto;
 
@@ -64,15 +67,20 @@ public class Update extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-
-
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        firebase = new Firebase("https://baseaula.firebaseio.com/");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         lanche = new Lanche();
         Bundle b = getIntent().getExtras();
-        if (b != null) {
-            lanche = (Lanche) b.get("lanche");
+
+        if ( b!= null) {
+            id = b.getInt("lanche");
+            lanche = MainActivity.lanches.get(id);
             update = true;
             fbDell.setVisibility(View.VISIBLE);
             updateUI();
@@ -80,11 +88,9 @@ public class Update extends AppCompatActivity {
         }
     }
 
-
-
     @OnClick(R.id.fabDel)
     public void fabDel(View view) {
-        lanche.delete();
+        MainActivity.lanches.remove(id);
         finish();
     }
 
@@ -96,21 +102,20 @@ public class Update extends AppCompatActivity {
         lanche.setValor(edtValor.getText().toString());
         if (update) {
             lanche.setImagem((String) imvImagem.getTag());
+            MainActivity.lanches.get(id).setNome(lanche.getNome());
+            MainActivity.lanches.get(id).setValor(lanche.getValor());
+            MainActivity.lanches.get(id).setImagem(lanche.getImagem());
 
-            lanche.update();
         } else {
             lanche.setNome(edtNome.getText().toString());
             lanche.setValor(edtValor.getText().toString());
             lanche.setImagem((String) imvImagem.getTag());
+            lanche.setId(MainActivity.lanches.size());
+            MainActivity.lanches.add(lanche);
 
-            Log.i("Teste",(String) imvImagem.getTag());
-
-            lanche.save();
-
-            List<Lanche> lanches = SQLite.select().from(Lanche.class).queryList();
-
+            firebase.child("lanche").push().setValue(lanche);
+            Log.i("Teste", (String) imvImagem.getTag());
         }
-
         finish();
     }
 
