@@ -12,6 +12,6 @@ public class Adapter extends Application {
     public void onCreate() {
         super.onCreate();
         Firebase.setAndroidContext(this);
-        //FlowManager.init(this);
+
     }
 }

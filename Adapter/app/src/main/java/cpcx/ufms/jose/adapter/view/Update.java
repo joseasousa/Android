@@ -19,6 +19,8 @@ import com.firebase.client.Firebase;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -78,9 +80,8 @@ public class Update extends AppCompatActivity {
         lanche = new Lanche();
         Bundle b = getIntent().getExtras();
 
-        if ( b!= null) {
-            id = b.getInt("lanche");
-            lanche = MainActivity.lanches.get(id);
+        if (b != null) {
+            lanche = (Lanche) b.get("lanche");
             update = true;
             fbDell.setVisibility(View.VISIBLE);
             updateUI();
@@ -90,7 +91,7 @@ public class Update extends AppCompatActivity {
 
     @OnClick(R.id.fabDel)
     public void fabDel(View view) {
-        MainActivity.lanches.remove(id);
+        firebase.child("lanche").child(lanche.getId()).removeValue();
         finish();
     }
 
@@ -102,18 +103,23 @@ public class Update extends AppCompatActivity {
         lanche.setValor(edtValor.getText().toString());
         if (update) {
             lanche.setImagem((String) imvImagem.getTag());
-            MainActivity.lanches.get(id).setNome(lanche.getNome());
-            MainActivity.lanches.get(id).setValor(lanche.getValor());
-            MainActivity.lanches.get(id).setImagem(lanche.getImagem());
+
+            Map<String,Object>mp = new HashMap<String,Object>();
+            mp.put(lanche.getId(), lanche);
+
+            firebase.child("lanche").child(lanche.getId()).updateChildren(mp);
 
         } else {
             lanche.setNome(edtNome.getText().toString());
             lanche.setValor(edtValor.getText().toString());
             lanche.setImagem((String) imvImagem.getTag());
-            lanche.setId(MainActivity.lanches.size());
-            MainActivity.lanches.add(lanche);
 
-            firebase.child("lanche").push().setValue(lanche);
+
+            Firebase posRef = firebase.child("lanche");
+            Firebase newPost = posRef.push();
+            lanche.setId(newPost.getKey());
+
+            newPost.setValue(lanche);
             Log.i("Teste", (String) imvImagem.getTag());
         }
         finish();
@@ -122,7 +128,7 @@ public class Update extends AppCompatActivity {
 
     public void updateUI() {
         if (lanche == null) {
-            edtNome.setText(null);            
+            edtNome.setText(null);
             edtValor.setText(null);
         } else {
             edtNome.setText(lanche.getNome());
@@ -142,7 +148,6 @@ public class Update extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (!fotoResource) {
@@ -157,23 +162,22 @@ public class Update extends AppCompatActivity {
                     stream = getContentResolver().openInputStream(data.getData());
                     bitmap = BitmapFactory.decodeStream(stream);
                     imvImagem.setImageBitmap(bitmap);
-                    localFoto=data.getDataString();
+                    localFoto = data.getDataString();
 
 
-
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
 
-        }else{
-        if (requestCode == FOTO) {
-            if (resultCode == Activity.RESULT_OK) {
-                setFoto(localFoto);
-            } else {
-                this.localFoto = null;
+        } else {
+            if (requestCode == FOTO) {
+                if (resultCode == Activity.RESULT_OK) {
+                    setFoto(localFoto);
+                } else {
+                    this.localFoto = null;
+                }
             }
-        }
         }
 
     }
@@ -187,7 +191,7 @@ public class Update extends AppCompatActivity {
     }
 
     @OnClick(R.id.fabFhoto)
-    public  void foto(View v){
+    public void foto(View v) {
         carregaFoto();
     }
 }
