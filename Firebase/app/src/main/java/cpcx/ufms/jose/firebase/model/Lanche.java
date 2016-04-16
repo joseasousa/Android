@@ -1,4 +1,4 @@
-package cpcx.ufms.jose.adapter.model;
+package cpcx.ufms.jose.firebase.model;
 
 import java.io.Serializable;
 

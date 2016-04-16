@@ -1,4 +1,5 @@
-package cpcx.ufms.jose.adapter.view;
+package cpcx.ufms.jose.firebase.view;
+
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,14 +18,13 @@ import android.widget.ImageView;
 import com.firebase.client.Firebase;
 
 import java.io.File;
-import java.io.InputStream;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cpcx.ufms.jose.adapter.R;
-import cpcx.ufms.jose.adapter.model.Lanche;
-import cpcx.ufms.jose.adapter.util.FireBaseUtil;
+import cpcx.ufms.jose.firebase.R;
+import cpcx.ufms.jose.firebase.model.Lanche;
+import cpcx.ufms.jose.firebase.util.FireBaseUtil;
 
 public class Update extends AppCompatActivity {
     private Firebase firebase;

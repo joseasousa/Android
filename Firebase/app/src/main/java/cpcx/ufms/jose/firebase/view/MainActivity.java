@@ -1,4 +1,4 @@
-package cpcx.ufms.jose.adapter.view;
+package cpcx.ufms.jose.firebase.view;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -24,9 +24,10 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cpcx.ufms.jose.adapter.R;
-import cpcx.ufms.jose.adapter.model.Lanche;
-import cpcx.ufms.jose.adapter.util.FireBaseUtil;
+import cpcx.ufms.jose.firebase.R;
+import cpcx.ufms.jose.firebase.model.Lanche;
+import cpcx.ufms.jose.firebase.util.FireBaseUtil;
+
 
 public class MainActivity extends AppCompatActivity {
     private Firebase firebase;
